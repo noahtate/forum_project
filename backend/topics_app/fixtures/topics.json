@@ -1,0 +1,37 @@
+[
+    {
+        "model": "topics_app.Topic",
+        "pk": 1,
+        "fields": {
+            "title": "Topic 1"
+        }
+    },
+    {
+        "model": "topics_app.Topic",
+        "pk": 2,
+        "fields": {
+            "title": "Topic 2"
+        }
+    },
+    {
+        "model": "topics_app.Topic",
+        "pk": 3,
+        "fields": {
+            "title": "Topic 3"
+        }
+    },
+    {
+        "model": "topics_app.Topic",
+        "pk": 4,
+        "fields": {
+            "title": "Topic 4"
+        }
+    },
+    {
+        "model": "topics_app.Topic",
+        "pk": 5,
+        "fields": {
+            "title": "Topic 5"
+        }
+    }
+]

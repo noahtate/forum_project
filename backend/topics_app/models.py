@@ -5,4 +5,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.title
+        return f"Title:{self.title}, ID:{self.id} | "
+    
+    def json(self):
+        return {"Title":self.title, "ID":self.id}
