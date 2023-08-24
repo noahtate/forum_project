@@ -21,5 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/',include('users_app.urls')),
     path('api/v1/',include('topics_app.urls')),
+    path('api/v1/',include('replies_app.urls')),
+
     # path('/api/v1/',include('posts_app.urls')), i think i leave this one off, and include it from topics_app.urls
 ]

@@ -18,9 +18,11 @@ from django.urls import path,include
 from . import views 
 
 urlpatterns = [
-    path("topics/",views.topics_view, name = "all_topics"),
-    path("topics/<int:topic_id>",views.paginated_view, name="paginator"),
-    path("topics/<int:topic_id>/<int:post_id>",include("posts_app.urls"))
+    path("topics/",views.homepage_view,name = "home"),
+    # path("topics/",views.topics_view, name = "all_topics"),
+    path("topics/<int:topic_id>/",views.paginated_view, name="paginator"),
+    path("topics/<int:topic_id>/post/",views.Post_Edit.as_view()),
+    path("topics/<int:topic_id>/<int:post_id>/",include("posts_app.urls"))
 ]
 
 

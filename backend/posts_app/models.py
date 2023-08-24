@@ -9,8 +9,8 @@ class Post(models.Model):
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts_created')
     topic_id = models.ForeignKey(Topic, on_delete=models.CASCADE)
     edited = models.BooleanField(default=False)
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
 
     def __str__(self):
-        return f"Post by {self.created_by.username} in {self.topic_id.title}"
+        return f"Post {self.content} by {self.created_by.username} in {self.topic_id.title}"

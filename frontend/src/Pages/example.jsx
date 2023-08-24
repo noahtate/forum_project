@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom"
+import Navbar from '../components/Navbar';
 
 const Example = () => {
   const [htmlContent, setHtmlContent] = useState('');
@@ -20,6 +21,8 @@ const Example = () => {
             <Link to="/">Home</Link>
     </button>
     <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    <Navbar/>
+
   </div>
   );
   

@@ -16,10 +16,16 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import A_User
+from .views import User_Info,Sign_Up,Log_In,Log_Out,User_Public_Info
 
 urlpatterns = [
-    path("user/<int:user_id>",A_User.as_view(), name="A_User")
+    path("user/signup/",Sign_Up.as_view(),name="signup"),
+    path("user/login/",Log_In.as_view(),name="login"),
+    path("user/logout/",Log_Out.as_view(),name="logout"),
+    path("user/<int:user_id>/",User_Info.as_view(), name="A_User"),
+    path("user/token/",User_Info.as_view(), name="token"),
+    path("user/<int:user_id>/public/",User_Public_Info.as_view(), name="A_User_Public")
+
 ]
 
 
