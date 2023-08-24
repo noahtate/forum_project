@@ -5,7 +5,7 @@ export default function Reply({ reply }) {
   
     return (
       <div className="main-post">
-        <p style={{ textAlign: 'left', marginBottom:'10px'}}>
+        <p style={{ textAlign: 'left', marginBottom:'20px'}}>
             <Link style={{textDecoration:'none'}} to={"/user/"+String(created_by_id)+"/"} >{created_by}</Link>
         </p>
         <div className="reply" style={{ fontSize: '16px', display: 'flex', alignItems: 'center' }}>

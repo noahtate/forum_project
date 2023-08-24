@@ -18,7 +18,7 @@ export default function LoginPage(){
 
     const signUp = async (e) => {
         e.preventDefault();
-        let response = await createUser({"display_name":displayName,email, password});
+        let response = await createUser({"display_name":displayName,"email":email,"password": password});
         console.log("response in signup:",response);
         let token = response.token;
         let user = response.display_name;

@@ -14,7 +14,6 @@ import json
 from rest_framework import status
 from .models import User
 import requests # <== import requests so we can utilize it within our CBV to make API calls
-from requests_oauthlib import OAuth1 #<== import OAuth1 which will essentially authenticate our keys when we send a request
 import os
 from .serializers import UserSerializer, UserPublicSerializer   
 
@@ -22,7 +21,8 @@ from .serializers import UserSerializer, UserPublicSerializer
 api_key = os.environ.get('MULTIAVATAR_API_KEY')
 def pfp(username):
     print("api key:","MPUZLtAEjFaBN0e")
-    url = "https://api.multiavatar.com/" + username
+    noparams_url = "https://api.multiavatar.com/" + username + ".png"
+    url = noparams_url
     params = {
         "api_key": "MPUZLtAEjFaBN0e"
     }
@@ -30,9 +30,8 @@ def pfp(username):
     print("URL: ",url)
     response = requests.get(url, params=params)
     if response.status_code == 200:
-        data = response.json()
-        print(data)
-        return data
+        print("response:",response, "imgURL:",noparams_url)
+        return noparams_url
     else:
         print("Request failed:", response.status_code)
 
@@ -59,6 +58,16 @@ class User_Info(APIView):
             except User.DoesNotExist:
                 error_message = {"error": "User not found"}
                 return Response(error_message, status=status.HTTP_404_NOT_FOUND)
+            
+    def post(request):
+        try:
+            user = User.objects.get(pk=request.data["id"])
+            user.bio = request.data["bio"]
+            user.save()
+            return Response("Entry updated successfully:", user.bio)
+        except user.DoesNotExist:
+            return Response("Entry not found", status=404)
+
         
 class User_Public_Info(APIView):
     

@@ -28,13 +28,12 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user( email, password, **extra_fields)
 
-
 class User(AbstractUser):
     objects = CustomUserManager()
     id = models.BigAutoField(primary_key=True)
     profile_picture = models.CharField(max_length=255,)
     bio = models.TextField()
-    display_name = models.CharField(max_length=255,unique=True )
+    display_name = models.CharField(max_length=32,unique=True )
     date_created = models.DateTimeField(auto_now_add=True)
     email = models.EmailField(
         verbose_name='email address',

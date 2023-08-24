@@ -25,7 +25,7 @@ def paginated_view(request, post_id, topic_id):
     paginated_data = [
         {
             'id': reply.id,
-            'created_by':reply.created_by.username,
+            'created_by':reply.created_by.display_name,
             'created_by_id':reply.created_by.id,
             'date_created':reply.date_created,
             'profile_picture':reply.created_by.profile_picture,

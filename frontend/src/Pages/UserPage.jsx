@@ -4,7 +4,7 @@ import { fetchTopics, fetchPosts, createPost, fetchUserPrivate, fetchUserToken }
 import { useState, useEffect } from "react";
 import Topic from "../components/topic";
 import { useUser } from "../components/usercontext";
-import NewMainPost from "../components/newmainpost";
+import Bio from "../components/bio";
 
 
 export default function UserPage(){
@@ -53,7 +53,7 @@ export default function UserPage(){
       </div>
       <h2 style={{textAlign: 'center'}}>{userData.display_name}'s profile!</h2>
       {userData?.id ? (
-                <NewMainPost post={{title:userData.display_name,date_created:userData.date_joined,content:userData.bio}} profile_picture={userData.profile_picture} id={userData.id} display_name={userData.display_name}/>
+                <Bio post={{title:userData.display_name,date_created:userData.date_joined,content:userData.bio}} profile_picture={userData.profile_picture} id={userData.id} display_name={userData.display_name}/>
             ) : (
                 <p>Loading...</p>
       )}

@@ -167,7 +167,7 @@ async function createUser(data) {
   try {
     const response = await api.post(`/user/signup/`, {
       "display_name":data.display_name,
-      "username":data.email,
+      "email":data.email,
       "password":data.password,
     });
     console.log("New user created- response:",response.data)
@@ -218,5 +218,20 @@ async function createReply(data) {
   }
 }
 
+async function editBio(data) {
+  console.log("edit bio: ",data.id,data.bio)
+  try {
+    const response = await api.post(`/user/bio/`, {
+      "id":data.id,
+      "bio":data.bio
+    });
+    console.log("bio edited - response:",response.data)
+    return response.data; // Assuming the response contains data in JSON format
+  } catch (error) {
+    console.error('Error editing bio:', error);
+    throw error;
+  }
+}
+
 // Export the functions for use in your components
-export { fetchTopics, fetchPosts, fetchReplies, fetchUser, fetchUserPrivate, fetchUserToken, logInUser, logOutUser, createUser, createPost, createReply };
+export { fetchTopics, fetchPosts, fetchReplies, fetchUser, fetchUserPrivate, fetchUserToken, logInUser, logOutUser, createUser, createPost, createReply, editBio };

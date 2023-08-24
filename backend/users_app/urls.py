@@ -24,8 +24,8 @@ urlpatterns = [
     path("user/logout/",Log_Out.as_view(),name="logout"),
     path("user/<int:user_id>/",User_Info.as_view(), name="A_User"),
     path("user/token/",User_Info.as_view(), name="token"),
-    path("user/<int:user_id>/public/",User_Public_Info.as_view(), name="A_User_Public")
-
+    path("user/<int:user_id>/public/",User_Public_Info.as_view(), name="A_User_Public"),
+    path("user/bio/",User_Info.as_view(), name="bio"),
 ]
 
 
