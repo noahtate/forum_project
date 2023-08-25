@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
+import { editBio } from "./api";
+import { useUser } from "./usercontext";
 
 export default function Bio( {post, profile_picture, display_name, id} ){
+    const {user, setUser} = useUser();
     const {title,date_created,content} = post;
     const [showEditBio, setShowEditBio] = useState(false);
-    const [bioContent, setBioContent] = useState("");
+    const [bioContent, setBioContent] = useState(content);
     const navigate = useNavigate();
+
+    
 
     // const {id,display_name,profile_picture} = userData
     
     // console.log("post.jsx:",post)
-    const editBio = async (e) => {
+    const submit = async (e) => {
         setShowEditBio(!showEditBio)
         console.log("editing bio: ",id,bioContent)
-        // e.preventDefault();
+        e.preventDefault();
         try{
-            let response = await editBio({"id":id,"content":bioContent});
+            let response = await editBio({"id":id,"bio":bioContent});
             console.log("create post response:",response);
             navigate(`/user/${id}/`);
         }catch (error){
@@ -31,12 +36,12 @@ export default function Bio( {post, profile_picture, display_name, id} ){
     };
 
     useEffect(()=>{
-        setBioContent(content);
-    },[]);
+        console.log(id,user)
+    },[])
 
     return(
         <>
-        {console.log({profile_picture})}
+        {console.log("rerendering",{profile_picture})}
             <div style={{minHeight:'1000px', marginBottom:'50px'}} className="main-post">   
                 <div style={{minHeight:'950px'}} className="main-post inside-main-post">
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -62,12 +67,18 @@ export default function Bio( {post, profile_picture, display_name, id} ){
                             value={bioContent}
                             onChange={(e) => setBioContent(e.target.value)}
                             />
-                            <button onClick={editBio} style={{display:"block", marginLeft:'auto',textAlign:'right', paddingRight:'10px'}}>save</button>
+                            <button type="button"  onClick={submit} style={{display:"block", marginLeft:'auto',textAlign:'right', paddingRight:'10px'}}>save</button>
                             </form>
                             ) : (
-                            <>
-                                <p>{bioContent}</p>
-                                <button onClick={() => setShowEditBio(!showEditBio)} style={{display:"block", marginLeft:'auto',textAlign:'right', paddingRight:'10px'}}>edit</button>
+                            <>{
+                                
+                                user?.user_id==id && (
+                                <>
+                                    <button type="button" onClick={() => setShowEditBio(!showEditBio)} style={{display:"block", marginLeft:'auto',textAlign:'right', paddingRight:'10px'}}>edit</button>                            
+                                </>
+                                )
+                            }
+                                 <p>{bioContent}</p>
                             </>
                                
                             )}                        

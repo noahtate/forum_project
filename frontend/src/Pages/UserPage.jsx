@@ -15,6 +15,19 @@ export default function UserPage(){
   const { user_id } = useParams();
   const navigate = useNavigate();
 
+
+  async function loadCurrentUser(id=null){
+    if(user==null){
+      try{
+        const userData = await fetchUserToken();
+        setUser({"user":userData.display_name, "user_id":userData.id});
+        console.log("User data:",userData)
+      } catch (error) {
+        console.log("Failed to retrieve the user data:", error)
+      }
+    }
+  }
+
   async function loadUser(id){
     if(!userData?.id && !user_id){
       try{
@@ -30,8 +43,9 @@ export default function UserPage(){
         setUserData(userData);
         console.log("User data:",userData)
       } catch (error) {
-        if(error.response.status == '401'){
-          navigate("/login/");
+        if(error.includes("token is null")){
+          alert("You must be signed in to view a profile.")
+          navigate("/login/");          
         }else{
           console.log("Failed to retrieve the user data:", error.response.status)
         }
@@ -39,12 +53,15 @@ export default function UserPage(){
     }
   }
 
+  useEffect(() => {
+    loadCurrentUser();
+  }, [user]);
 
-    useEffect(() => {
-      loadUser(user_id);
-    }, []);
+  useEffect(() => {
+    loadUser(user_id);
+  }, []);
 
-    return(
+  return(
     <div style={{ marginTop: '50px' }}>
       <Navbar/>
       <h1 style={{marginLeft:'100px', marginTop:'50px'}}>Welcome to the Forum</h1>
@@ -58,5 +75,5 @@ export default function UserPage(){
                 <p>Loading...</p>
       )}
     </div>
-    )
+  )
 }

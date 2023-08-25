@@ -16,15 +16,17 @@ from .models import User
 import requests # <== import requests so we can utilize it within our CBV to make API calls
 import os
 from .serializers import UserSerializer, UserPublicSerializer   
-
+from rest_framework import permissions
+from .permissions import IsOwnerOrReadOnly
+from dotenv import load_dotenv
+load_dotenv()
 
 api_key = os.environ.get('MULTIAVATAR_API_KEY')
 def pfp(username):
-    print("api key:","MPUZLtAEjFaBN0e")
     noparams_url = "https://api.multiavatar.com/" + username + ".png"
     url = noparams_url
     params = {
-        "api_key": "MPUZLtAEjFaBN0e"
+        "api_key": api_key
     }
     # https://api.multiavatar.com/dummy_user_1?api_key=MPUZLtAEjFaBN0e example query
     print("URL: ",url)
@@ -59,12 +61,20 @@ class User_Info(APIView):
                 error_message = {"error": "User not found"}
                 return Response(error_message, status=status.HTTP_404_NOT_FOUND)
             
-    def post(request):
+class User_Bio(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
+
+    def post(self,request):
         try:
             user = User.objects.get(pk=request.data["id"])
             user.bio = request.data["bio"]
             user.save()
-            return Response("Entry updated successfully:", user.bio)
+            response_data = {
+            "message": "Entry updated successfully",
+            "bio": user.bio
+            }
+            return Response(response_data, status=200)
         except user.DoesNotExist:
             return Response("Entry not found", status=404)
 

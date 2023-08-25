@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import User_Info,Sign_Up,Log_In,Log_Out,User_Public_Info
+from .views import User_Info,Sign_Up,Log_In,Log_Out,User_Public_Info,User_Bio
 
 urlpatterns = [
     path("user/signup/",Sign_Up.as_view(),name="signup"),
@@ -25,7 +25,7 @@ urlpatterns = [
     path("user/<int:user_id>/",User_Info.as_view(), name="A_User"),
     path("user/token/",User_Info.as_view(), name="token"),
     path("user/<int:user_id>/public/",User_Public_Info.as_view(), name="A_User_Public"),
-    path("user/bio/",User_Info.as_view(), name="bio"),
+    path("user/bio/",User_Bio.as_view(), name="bio"),
 ]
 
 
